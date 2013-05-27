@@ -41,8 +41,8 @@ Theta2_grad = zeros(size(Theta2));
 %
 m = size(X, 1);
 
-a2 = sigmoid([ones(m, 1) X] * Theta1');
-h_theta_x = sigmoid([ones(m, 1) a2] * Theta2');
+a_2 = sigmoid([ones(m, 1) X] * Theta1');
+h_theta_x = sigmoid([ones(m, 1) a_2] * Theta2');
 
 for i = 1:m
     tmp = (1:num_labels)(:);
@@ -80,16 +80,16 @@ for t = 1:m
     a3 = sigmoid(z3);
     % step 2
     label = (1:num_labels);
-    yi = (label==y(i));
-    delta3 = (a3 - yi)';
+    yt = (label==y(t));
+    delta3 = (a3 - yt)';
     % step 3
     delta2 = Theta2' * delta3 .* [0; sigmoidGradient(z2)'];
     % step 4
     Theta2_grad = Theta2_grad + delta3 * a2;
     Theta1_grad = Theta1_grad + delta2(2:end) * a1;
 end
-Theta2_grad = Theta2_grad / m;
-Theta1_grad = Theta1_grad / m;
+Theta2_grad = Theta2_grad ./ m;
+Theta1_grad = Theta1_grad ./ m;
 
 % Part 3: Implement regularization with the cost function and gradients.
 %
